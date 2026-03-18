@@ -23,5 +23,17 @@ class ArticleService {
         return article;
     }
 
+    async getArticlesByUserId(userId: any){
+        const articles = await this.repo.findByUserId(userId);
+        if (!articles) {
+            throw new Error('Articles not found for this user');
+        }
+        return articles;
+    }
+
+    async getArticlesWithComments(){
+        return this.repo.findAllWithComments();
+    }
+
 }
 export default ArticleService;

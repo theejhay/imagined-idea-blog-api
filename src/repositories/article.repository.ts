@@ -18,6 +18,28 @@ class ArticleRepository {
   async findById(id: string) {
     return Article.findById(id);
   }
+
+  async findByUserId(userId: string) {
+    return Article.find({ userId: userId });
+  }
+
+  async findAllWithComments() {
+    return Article.aggregate([
+      {
+        $addFields: {
+          strId: { $toString: "$_id" },
+        },
+      },
+      {
+        $lookup: {
+          from: "comments",
+          localField: "strId",
+          foreignField: "articleId",
+          as: "comments",
+        },
+      },
+    ]);
+  }
 }
 
 export default ArticleRepository;

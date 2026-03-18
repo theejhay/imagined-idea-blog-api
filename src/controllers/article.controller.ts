@@ -28,6 +28,22 @@ class ArticleController {
             data: article
         });
     });
+
+    getArticlesByUserId = asyncHandler(async (req: Request, res: Response) => {
+        const articles = await this.service.getArticlesByUserId(req.params.userId);
+        res.json({
+            success: true,
+            data: articles
+        });
+    });
+
+    getArticlesWithComments = asyncHandler(async (req: Request, res: Response) => {
+        const articles = await this.service.getArticlesWithComments();
+        res.json({
+            success: true,
+            data: articles
+        });
+    });
 }
 
 export default ArticleController;
